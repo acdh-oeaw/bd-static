@@ -34,14 +34,14 @@
                                 <h1 class="lh-base">
                                     <span class="display-6">Digitale Edition</span>
                                     <br/>
-                                    <span class="display-4">Baedker</span>
+                                    <span class="display-4">Baedeker</span>
                                     <br/>
                                     <span class="display-6">1875 – 1914</span>
                                 </h1>
                                 <p class="text-end">herausgegeben vom <a href="https://www.oeaw.ac.at/acdh/">Austrian Centre for Digitial Humanities</a></p>
                                 <p class="lead">
                                     Eine TEI/XML online Edition der <br />
-                                    Baedker Reiseführer für Indien, Konstantinopel und Kleinasien, Nordamerika, Palästina und Syrien und für das Mittelmeer.
+                                    Baedeker Reiseführer für Indien, Konstantinopel und Kleinasien, Nordamerika, Palästina und Syrien und für das Mittelmeer.
                                 </p>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                                     <a href="about.html" type="button"
@@ -53,7 +53,7 @@
                             </div>
                             <div class="col-10 col-sm-8 col-lg-6">
                                 <figure class="figure">
-                                    <img src="images/title-image.jpg"
+                                    <img src="images/title-image.svg"
                                         class="d-block mx-lg-auto img-fluid"
                                         alt="" width="400" height="600"
                                         loading="lazy"/>

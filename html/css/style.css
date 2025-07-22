@@ -1,8 +1,10 @@
 :root {
-  --dse-base-color: #7b0600;
+  /* --dse-base-color: #0a4ba5; */
+  --dse-base-color: #cc0000;
   --dse-base-hover: #ff0404a8;
   --dse-background: #d6d8bb;
-  --dse-background-dark: #a2ad8f;
+  --dse-background-dark: #0a4ba5;
+  --dse-light-grey: #d3d3d3;
 }
 
 a {
@@ -23,6 +25,31 @@ nav:not([aria-label="breadcrumb"]) {
 
 footer {
   background-color: var(--dse-background-dark);
+  color: white
+}
+
+footer a {
+  color: white;
+}
+
+footer a:hover {
+  color: var(--dse-light-grey);
+}
+.nav-link:hover {
+  color: var(--dse-light-grey);
+}
+.nav-link {
+  color: white;
+}
+.navbar .navbar-nav .nav-link.show {
+  color: var(--dse-light-grey);
+}
+
+.navbar-brand {
+  color: white;
+}
+.navbar-brand:hover {
+  color: var(--dse-light-grey);
 }
 
 dd {
