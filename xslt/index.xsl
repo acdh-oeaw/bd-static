@@ -16,7 +16,7 @@
 
     <xsl:template match="/">
         <xsl:variable name="doc_title">
-            <xsl:value-of select='"Die Schaubühne digital"'/>
+            <xsl:value-of select='"Baedeker digital"'/>
         </xsl:variable>
         <html class="h-100" lang="{$default_lang}">
             <head>

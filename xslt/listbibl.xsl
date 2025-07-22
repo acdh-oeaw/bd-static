@@ -69,7 +69,7 @@
                                             <xsl:value-of select="$title"/>
                                         </td>
                                         <td>
-                                            <xsl:value-of select="replace(./tei:title[@level='j'], 'Die Schaubühne, ', '')"/>
+                                            <xsl:value-of select="replace(./tei:title[@level='j'], 'Baedeker, ', '')"/>
                                         </td>
                                         <td>
                                             <xsl:value-of select="$id"/>

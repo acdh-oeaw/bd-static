@@ -76,7 +76,7 @@
         <html class="h-100" lang="{$default_lang}">
             <head>
                 <xsl:call-template name="html_head">
-                    <xsl:with-param name="html_title" select="'Die Schaubühne: '||$doc_title"></xsl:with-param>
+                    <xsl:with-param name="html_title" select="'Baedeker: '||$doc_title"></xsl:with-param>
                 </xsl:call-template>
             </head>
             <body class="d-flex flex-column h-100">
@@ -219,14 +219,16 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div id="osd_viewer"/>
-                                <figcaption class="figure-caption text-center">Die Schaubühne, <xsl:value-of select="$doc_title"/>
+                                <figcaption class="figure-caption text-center">Baedeker, <xsl:value-of select="$doc_title"/>
                                 </figcaption>
                                 <div class="text-center">
                                     <a href="{$origDetailView}">original HTML</a>
                                 </div>
                             </div>
                             <div class="col-md-5">
+                                <xsl:apply-templates select=".//tei:front"/>
                                 <xsl:apply-templates select=".//tei:body"/>
+                                <xsl:apply-templates select=".//tei:back"/>
                             </div>
                         </div>
 
@@ -238,9 +240,6 @@
                         <span id="url" class="visually-hidden" aria-hidden="true">
                             <xsl:value-of select="$facs-url"/>
                         </span>
-
-                        <xsl:apply-templates select=".//tei:back"/>
-
                     </div>
                 </main>
                 <xsl:call-template name="html_footer"/>
