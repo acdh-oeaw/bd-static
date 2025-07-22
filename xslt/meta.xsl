@@ -30,16 +30,28 @@
             <body class="d-flex flex-column h-100">
             <xsl:call-template name="nav_bar"/>
                 <main class="flex-shrink-0 flex-grow-1">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="ps-5 p-3">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="index.html"><xsl:value-of select="$project_short_title"/></a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page"><xsl:value-of select="$doc_title"/></li>
+                        </ol>
+                    </nav>
                     <div class="container">                        
-                        <h1><xsl:value-of select="$doc_title"/></h1>    
-                        <xsl:apply-templates select=".//tei:body" />
-
-                        <div class="text-center p-4">
-                            <xsl:call-template name="blockquote">
-                                <xsl:with-param name="pageId" select="$link"/>
-                            </xsl:call-template>
+                        <h1 class="text-center"><xsl:value-of select="$doc_title"/></h1>
+                        <div class="row">
+                            <div class="col-2"/>
+                            <div class="col-8">
+                                <xsl:apply-templates select=".//tei:body" />
+                                <div class="text-center p-4">
+                                    <xsl:call-template name="blockquote">
+                                        <xsl:with-param name="pageId" select="$link"/>
+                                    </xsl:call-template>
+                                </div>
+                            </div>
+                            <div class="col-2"/>
                         </div>
-
                     </div>
                 </main>
                 <xsl:call-template name="html_footer"/>
@@ -48,18 +60,23 @@
     </xsl:template>
 
     <xsl:template match="tei:p">
-        <p id="{generate-id()}"><xsl:apply-templates/></p>
+        <p><xsl:apply-templates/></p>
     </xsl:template>
     <xsl:template match="tei:div">
-        <div id="{generate-id()}"><xsl:apply-templates/></div>
+        <div><xsl:apply-templates/></div>
     </xsl:template>
     <xsl:template match="tei:lb">
         <br/>
     </xsl:template>
-    <xsl:template match="tei:unclear">
-        <abbr title="unclear"><xsl:apply-templates/></abbr>
+    
+    <xsl:template match="tei:p//tei:title">
+        <span class="dse-title"><xsl:apply-templates/></span>
     </xsl:template>
-    <xsl:template match="tei:del">
-        <del><xsl:apply-templates/></del>
-    </xsl:template>    
+    
+    <xsl:template match="tei:ref[@target]">
+        <a href="{@target}"><xsl:apply-templates/></a>
+    </xsl:template>
+
+    
+        
 </xsl:stylesheet>

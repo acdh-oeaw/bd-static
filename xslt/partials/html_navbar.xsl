@@ -5,7 +5,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="#all" version="2.0">
     <xsl:template match="/" name="nav_bar">
         <header>
-            <nav aria-label="Primary" class="navbar navbar-expand-lg bg-body-tertiary">
+            <nav aria-label="Primary" class="navbar navbar-expand-lg">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="index.html">
                         <xsl:value-of select="$project_short_title"/>
@@ -28,31 +28,28 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="toc.html">Editionseinheiten</a>
+                                <a class="nav-link" href="hefte.html">Alle Hefte</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="toc.html">Alle Seiten</a>
                             </li>
 
                             <li class="nav-item dropdown disabled">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Register</a>
                                 <ul class="dropdown-menu">
                                     <li>
+                                        <a class="dropdown-item" href="listbibl.html">Texte</a>
+                                    </li>
+                                    <li>
                                         <a class="dropdown-item" href="listperson.html">Personen</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="listplace.html">Orte</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="listorg.html">Organisationen</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="listbibl.html">Werke</a>
                                     </li>
                                 </ul>
                             </li>
-
-                            <li class="nav-item">
-                                <a title="Suche" class="nav-link" href="search.html">Suche</a>
-                            </li>
                         </ul>
+                        <form class="d-flex" role="search" method="GET" action="search.html">
+                            <input class="form-control me-2" type="search" placeholder="z.B. 'Büchsenhausen'" aria-label="Suche" name="schaubuehne[query]"></input>
+                            <button class="btn btn-primary" type="submit">Suche</button>
+                        </form>
                     </div>
                 </div>
             </nav>

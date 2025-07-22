@@ -22,10 +22,41 @@
             <body class="d-flex flex-column h-100">
                 <xsl:call-template name="nav_bar"/>
                 <main class="flex-shrink-0 flex-grow-1">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="ps-5 p-3">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="index.html">
+                                    <xsl:value-of select="$project_short_title"/>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page"><xsl:value-of select="$doc_title"/></li>
+                        </ol>
+                    </nav>
                     <div class="container">
-                        <h1>
+                        <h1 class="text-center">
                             <xsl:value-of select="$doc_title"/>
                         </h1>
+                        <div class="text-center p-3">
+                            <div id="searchbox"/>
+                            <div id="stats-container"/>
+                            <div id="current-refinements"/>
+                            <div id="clear-refinements"/>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h2 class="visually-hidden">Suchfilter</h2>
+                                <div id="r-year" class="pb-3"></div>
+                                <div id="r-issue" class="pb-3"></div>
+                                <div id="r-text" class="pb-3"></div>
+                                <div id="r-author" class="pb-3"></div>
+                                <div id="r-person" class="pb-3"></div>
+                            </div>
+                            <div class="col-md-9">
+                                <div id="pagination" class="p-3"/>
+                                <div id="hits"/>
+                            </div>
+                        </div>
                     </div>
                 </main>
                 <xsl:call-template name="html_footer"/>

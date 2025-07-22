@@ -27,40 +27,62 @@
             <body class="d-flex flex-column h-100">
             <xsl:call-template name="nav_bar"/>
                 <main class="flex-shrink-0 flex-grow-1">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="ps-5 p-3">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="index.html"><xsl:value-of select="$project_short_title"/></a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page"><xsl:value-of select="$doc_title"/></li>
+                        </ol>
+                    </nav>
                     <div class="container">
-                        <h1>Inhaltsverzeichnis</h1>
+                        <h1 class="text-center"><xsl:value-of select="$doc_title"/></h1>
+                        <div class="text-center p-1"><span id="counter1"></span> of <span id="counter2"></span> Seiten</div>
                         <table id="myTable">
                             <thead>
                                 <tr>
-                                    <th scope="col" width="20" tabulator-formatter="html" tabulator-headerSort="false" tabulator-download="false">#</th>
-                                    <th scope="col" tabulator-headerFilter="input">Titel</th>
-                                    <th scope="col" tabulator-headerFilter="input">Dateinname</th>
+                                    <th scope="col" tabulator-headerFilter="input" tabulator-formatter="html" tabulator-download="false" tabulator-minWidth="300">Titel</th>
+                                    <th scope="col" tabulator-headerFilter="input" tabulator-visible="false" tabulator-download="true">Titel_</th>
+                                    <th scope="col" tabulator-headerFilter="input">Jahrgang</th>
+                                    <th scope="col" tabulator-headerFilter="input">Heft</th>
+                                    <th scope="col" tabulator-headerFilter="input">Autor*In</th>
+                                    <th scope="col" tabulator-headerFilter="input">Text</th>
+                                    <th scope="col" tabulator-headerFilter="input" tabulator-visible="false" tabulator-download="true">ID</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <xsl:for-each
                                     select="collection('../data/editions?select=*.xml')//tei:TEI">
-                                    <xsl:variable name="full_path">
-                                        <xsl:value-of select="document-uri(/)"/>
+                                    <xsl:sort select="data(@xml:id)"></xsl:sort>
+                                    <xsl:variable name="id">
+                                        <xsl:value-of select="replace(./@xml:id, '.xml', '.html')"/>
+                                    </xsl:variable>
+                                    <xsl:variable name="title">
+                                        <xsl:value-of select=".//tei:titleStmt/tei:title[@level='a']"/>
                                     </xsl:variable>
                                     <tr>
                                         <td>
-                                            <a>
-                                                <xsl:attribute name="href">
-                                                  <xsl:value-of
-                                                  select="replace(tokenize($full_path, '/')[last()], '.xml', '.html')"
-                                                  />
-                                                </xsl:attribute>
-                                                <i class="bi bi-link-45deg"/>
+                                            <a href="{$id}">
+                                                <xsl:value-of select="$title"/>
                                             </a>
                                         </td>
                                         <td>
-                                            <xsl:value-of
-                                                select=".//tei:titleStmt/tei:title[1]/text()"/>
+                                            <xsl:value-of select="$title"/>
                                         </td>
                                         <td>
-                                            <xsl:value-of select="tokenize($full_path, '/')[last()]"
-                                            />
+                                            <xsl:value-of select=".//tei:biblScope[@unit='volume'][1]"/>
+                                        </td>
+                                        <td>
+                                            <xsl:value-of select=".//tei:biblScope[@unit='issue'][1]"/>
+                                        </td>
+                                        <td>
+                                            <xsl:value-of select=".//tei:bibl[@n='current text']/tei:author"/>
+                                        </td>
+                                        <td>
+                                            <xsl:value-of select=".//tei:bibl[@n='current text']/tei:title"/>
+                                        </td>
+                                        <td>
+                                            <xsl:value-of select="$id"/>
                                         </td>
                                     </tr>
                                 </xsl:for-each>
