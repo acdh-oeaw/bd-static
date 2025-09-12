@@ -43,11 +43,9 @@
                                 <tr>
                                     <th scope="col" tabulator-headerFilter="input" tabulator-formatter="html" tabulator-download="false" tabulator-minWidth="300">Titel</th>
                                     <th scope="col" tabulator-headerFilter="input" tabulator-visible="false" tabulator-download="true">Titel_</th>
-                                    <th scope="col" tabulator-headerFilter="input">Jahrgang</th>
-                                    <th scope="col" tabulator-headerFilter="input">Heft</th>
-                                    <th scope="col" tabulator-headerFilter="input">Autor*In</th>
-                                    <th scope="col" tabulator-headerFilter="input">Text</th>
-                                    <th scope="col" tabulator-headerFilter="input" tabulator-visible="false" tabulator-download="true">ID</th>
+                                    <th scope="col" tabulator-headerFilter="input">Band</th>
+                                    <th scope="col" tabulator-headerFilter="input">Jahr</th>
+                                    <th scope="col" tabulator-headerFilter="input" tabulator-visible="true" tabulator-download="true">ID</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,16 +68,10 @@
                                             <xsl:value-of select="$title"/>
                                         </td>
                                         <td>
-                                            <xsl:value-of select=".//tei:biblScope[@unit='volume'][1]"/>
+                                            <xsl:value-of select=".//tei:bibl[@type='short']"/>
                                         </td>
                                         <td>
-                                            <xsl:value-of select=".//tei:biblScope[@unit='issue'][1]"/>
-                                        </td>
-                                        <td>
-                                            <xsl:value-of select=".//tei:bibl[@n='current text']/tei:author"/>
-                                        </td>
-                                        <td>
-                                            <xsl:value-of select=".//tei:bibl[@n='current text']/tei:title"/>
+                                            <xsl:value-of select=".//tei:imprint/tei:date[@when]"/>
                                         </td>
                                         <td>
                                             <xsl:value-of select="$id"/>

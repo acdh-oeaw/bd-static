@@ -31,23 +31,14 @@
                                 <a class="nav-link" href="hefte.html">Alle Hefte</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="toc.html">Alle Seiten</a>
+                                <a class="nav-link" href="toc.html">Alle Bände</a>
                             </li>
-
-                            <li class="nav-item dropdown disabled">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Register</a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="listbibl.html">Texte</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="listperson.html">Personen</a>
-                                    </li>
-                                </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="hefte.html">Register</a>
                             </li>
                         </ul>
                         <form class="d-flex" role="search" method="GET" action="search.html">
-                            <input class="form-control me-2" type="search" placeholder="z.B. 'Büchsenhausen'" aria-label="Suche" name="schaubuehne[query]"></input>
+                            <input class="form-control me-2" type="search" placeholder="z.B. 'Konstantinopel'" aria-label="Suche" name="baedeker[query]"></input>
                             <button class="btn btn-primary" type="submit">Suche</button>
                         </form>
                     </div>

@@ -10,9 +10,7 @@
     <xsl:import href="./partials/blockquote.xsl"/>
 
     <xsl:template match="/">
-        <xsl:variable name="doc_title" select="'Alle Hefte'"/>
-        <xsl:variable name="schaubuehne-url" select="'https://schaubuehne.oeaw.ac.at/php/getPage.php?keyString='"/>
-
+        <xsl:variable name="doc_title" select="'Alle Bände'"/>
         <html class="h-100" lang="{$default_lang}">
             <head>
                 <xsl:call-template name="html_head">

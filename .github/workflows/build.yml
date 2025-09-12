@@ -35,8 +35,8 @@ jobs:
       IMAGE_NAME: ${{ github.repository }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Saxon, Ant and Fundament
+        uses: actions/checkout@v5
+      - name: Install Saxon and Ant
         run: |
           sudo apt-get update && sudo apt-get install openjdk-11-jre-headless ant -y --no-install-recommends
           ./shellscripts/dl_saxon.sh
