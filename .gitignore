@@ -5,6 +5,9 @@ html/beacon.txt
 /html/oai-pmh
 /saxon
 data/imprint.xml
+play.*
+foo.*
+*.ipynb
 
 data/indices/*.xml
 data/indices/*.rdf
@@ -148,3 +151,4 @@ desktop.ini
 
 # MacOS
 .DS_Store
+foo.rdf
