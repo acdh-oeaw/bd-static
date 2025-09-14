@@ -96,6 +96,8 @@ div#map {
 
 div#osd_viewer {
   height: 800px;
+  position: sticky;
+  top: 0;
 }
 /** Match bootstrap navlink focus outline color. */
 :focus-visible {
@@ -152,5 +154,6 @@ div#osd_viewer {
 .dse-indent {
   margin-bottom: 0.2rem;
   text-align: justify;
+  text-indent: 1.5em;
 }
 
