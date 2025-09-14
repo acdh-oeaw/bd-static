@@ -119,17 +119,16 @@ div#osd_viewer {
   font-style: italic;
 }
 
-.tei-fw {
-  text-align: center;
+.dse-fw {
   padding-bottom: 1rem;
 }
 
-.tei-title {
+.dse-title {
   text-align: center;
   font-size: 1.2rem;
 }
 
-.tei-p {
+.dse-p {
   text-indent: 0.7em;
   margin: 0.2em 0;
 }
@@ -141,3 +140,17 @@ div#osd_viewer {
 .dse-title {
   font-variant: small-caps;
 }
+
+.dse-italics {
+  font-style: italic;
+}
+
+.dse-bold {
+  font-weight: bold;
+}
+
+.dse-indent {
+  margin-bottom: 0.2rem;
+  text-align: justify;
+}
+

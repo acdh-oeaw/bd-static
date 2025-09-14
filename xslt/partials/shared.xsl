@@ -6,6 +6,28 @@
     exclude-result-prefixes="xs"
     version="2.0">
     
+    <xsl:template match="tei:fw[@type='header']">
+        <div class="row">
+            <div class="col-md-4">
+                <xsl:apply-templates select="./tei:fw[@place='top_left']"/>
+            </div>
+            <div class="col-md-4">
+                <xsl:apply-templates select="./tei:fw[@place='top_center']"/>
+            </div>
+            <div class="col-md-4">
+                <xsl:apply-templates select="./tei:fw[@place='top_right']"/>
+            </div>
+        </div>
+    </xsl:template>
+    
+    <xsl:template match="tei:seg[@rend='italicised']">
+        <span class="dse-italics"><xsl:apply-templates/></span>
+    </xsl:template>
+
+    <xsl:template match="tei:seg[@rend='bold']">
+        <span class="dse-bold"><xsl:apply-templates/></span>
+    </xsl:template>
+    
     <xsl:template match="tei:div">
         <div><xsl:apply-templates/></div>
     </xsl:template>
@@ -13,6 +35,7 @@
     <xsl:template match="tei:lb">
         <br/>
     </xsl:template>
+    <xsl:template match="tei:lb[@break='no']">-<br/></xsl:template>
     <xsl:template match="tei:lb[@rend='line']">
         <hr />
     </xsl:template>
@@ -48,12 +71,11 @@
         </xsl:choose>
     </xsl:template>
     
-    <xsl:template match="tei:w">
-        <span id="{./@xml:id}" class="w"><xsl:apply-templates/></span>
-    </xsl:template>
+    <xsl:template match="tei:w"><span id="{./@xml:id}" class="w"><xsl:apply-templates/></span></xsl:template>
+    <xsl:template match="tei:pc"><span class="dse-pc"><xsl:apply-templates/></span></xsl:template>
     
     <xsl:template match="tei:fw">
-        <div class="tei-fw">
+        <div class="dse-fw">
             <xsl:apply-templates/>
         </div>
     </xsl:template>
@@ -90,10 +112,10 @@
     <xsl:template match="tei:p">
         <xsl:choose>
             <xsl:when test=".[@rend]">
-                <p class="{@rend}"><xsl:apply-templates/></p>
+                <p class="dse-{@rend}"><xsl:apply-templates/></p>
             </xsl:when>
             <xsl:otherwise>
-                <p class="tei-p"><xsl:apply-templates/></p>
+                <p class="dse-p"><xsl:apply-templates/></p>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -124,7 +146,7 @@
     </xsl:template>
     
     <xsl:template match="tei:div//tei:title">
-        <div class="tei-title"><xsl:apply-templates/></div>
+        <div class="dse-title"><xsl:apply-templates/></div>
     </xsl:template>
    
 </xsl:stylesheet>

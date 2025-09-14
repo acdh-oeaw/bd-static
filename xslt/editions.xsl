@@ -28,50 +28,11 @@
     <xsl:variable name="doc_title">
         <xsl:value-of select=".//tei:titleStmt/tei:title[1]/text()"/>
     </xsl:variable>
-    <xsl:variable name="volumeWritten" select=".//tei:biblScope[@unit='volume']/text()"/>
+    <xsl:variable name="volumeWritten" select="tokenize(.//tei:title[@level='a']/text(), ', ')[1]"/>
     <xsl:variable name="volume" select=".//tei:biblScope[@unit='volume']/@n"/>
-    <xsl:variable name="halbbandWritten" select=".//tei:biblScope[@unit='halbband']/text()"/>
-    <xsl:variable name="halbband" select=".//tei:biblScope[@unit='halbband']/@n"/>
-    <xsl:variable name="fullPage" select="replace(tokenize($teiSource, '_')[last()], '.xml', '')"/>
-    <xsl:variable name="firstHalbband">
-        <xsl:choose>
-            <xsl:when test=".//tei:biblScope[@unit='halbband']/text()">
-                <xsl:value-of select="'01'"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="'00'"/>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:variable>
-    <xsl:variable name="issueWritten" select=".//tei:biblScope[@unit='issue']/text()"/>
-    <xsl:variable name="firstIssue">
-        <xsl:choose>
-            <xsl:when test=".//tei:biblScope[@unit='issue']/text()">
-                <xsl:value-of select="'01'"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="'00'"/>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:variable>
-    <xsl:variable name="issue" select=".//tei:biblScope[@unit='issue']/@n"/>
-    <xsl:variable name="pageWritten" select=".//tei:biblScope[@unit='page']/text()"/>
-    <xsl:variable name="page" select=".//tei:biblScope[@unit='page']/@n"/>
-
-    <xsl:variable name="volumeUrl" select="replace(.//tei:biblScope[@unit='volume']/@source, '#', '')"/>
-    <xsl:variable name="halbbandUrl" select="replace(.//tei:biblScope[@unit='halbband']/@source, '#', '')"/>
-    <xsl:variable name="issueUrl" select="replace(.//tei:biblScope[@unit='issue']/@source, '#', '')"/>
-
-
-
     <xsl:variable name="facs-url">
         <xsl:value-of select=".//tei:pb[1]/@facs"/>
     </xsl:variable>
-    <!--<xsl:variable name="orig-app-url" select="'https://schaubuehne.oeaw.ac.at/issuenew-01-01-02.html#page=n0050'"/>-->
-    <xsl:variable name="orig-app-url" select="'https://schaubuehne.oeaw.ac.at/issuenew-'"/>
-    <xsl:variable name="origDetailView" select="$orig-app-url||$volume||'-'||$halbband||'-'||$issue||'.html#page='||$fullPage"></xsl:variable>
-
-
     <xsl:template match="/">
         <html class="h-100" lang="{$default_lang}">
             <head>
@@ -90,31 +51,10 @@
                                 </a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="{$volumeUrl}">
-                                    Jahrgang <xsl:value-of select="$volumeWritten"/>
+                                <a href="#">
+                                    <xsl:value-of select="$volumeWritten"/>
                                 </a>
                             </li>
-                            <xsl:if test="$halbbandWritten">
-                                <li class="breadcrumb-item">
-                                    <a href="{$halbbandUrl}">
-                                        Halbband <xsl:value-of select="$halbbandWritten"/>
-                                    </a>
-                                </li>
-                            </xsl:if>
-                            <xsl:if test="$issueWritten">
-                                <li class="breadcrumb-item">
-                                    <a href="{$issueUrl}">
-                                        Heft <xsl:value-of select="$issueWritten"/>
-                                    </a>
-                                </li>
-                            </xsl:if>
-                            <xsl:for-each select=".//tei:bibl[@n='current text']">
-                                <li class="breadcrumb-item">
-                                    <a href="{replace(./tei:idno, '.xml', '.html')}">
-                                        <xsl:value-of select="./tei:title/@n"/>
-                                    </a>
-                                </li>
-                            </xsl:for-each>
                         </ol>
                     </nav>
                     <div class="container">
@@ -217,16 +157,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-5">
                                 <div id="osd_viewer"/>
                                 <figcaption class="figure-caption text-center">Baedeker, <xsl:value-of select="$doc_title"/>
                                 </figcaption>
-                                <div class="text-center">
-                                    <a href="{$origDetailView}">original HTML</a>
-                                </div>
                             </div>
-                            <div class="col-md-5">
-                                <xsl:apply-templates select=".//tei:front"/>
+                            <div class="col-md-7">
                                 <xsl:apply-templates select=".//tei:body"/>
                                 <xsl:apply-templates select=".//tei:back"/>
                             </div>
