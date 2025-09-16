@@ -7,8 +7,7 @@ from acdh_tei_pyutils.utils import check_for_hash
 from rdflib import RDF, SKOS, Graph, Literal
 from tqdm import tqdm
 
-print("write skos:Concepts as tei:term into back element")
-
+print("creating schlagworte.xml")
 files = sorted(glob.glob("./data/editions/*xml"))
 domain = "https://vocabs.acdh.oeaw.ac.at/traveldigital/"
 
@@ -105,6 +104,40 @@ for concept in concepts:
     #         )
     value["tei"] = item
     concept_info[key] = value
+
+template = """
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:base="https://baedeker-digital.acdh.oeaw.ac.at" xml:id="schlagworte.xml">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Schlagwortverzeichnis</title>
+            </titleStmt>
+            <publicationStmt>
+                <p>Publication Information</p>
+            </publicationStmt>
+            <sourceDesc>
+                <p>Genereated with `pyscripts/denormalize_concepts.py` from https://vocabs.acdh.oeaw.ac.at/traveldigital/ConceptScheme</p>
+            </sourceDesc>
+      </fileDesc>
+  </teiHeader>
+  <text>
+        <body>
+            <list type="concepts">
+                <item></item>
+            </list>
+        </body>
+  </text>
+</TEI>
+"""  # noqa: E501
+
+
+skos_tei = TeiReader(template)
+skos_tei_list = skos_tei.any_xpath(".//tei:list")[0]
+for key, value in concept_info.items():
+    skos_tei_list.append(value["tei"])
+skos_tei.tree_to_file(f"{os.path.join('data', 'indices', 'schlagworte.xml')}")
+
+print("write skos:Concepts as tei:term into back element")
 
 for x in tqdm(files):
     doc = TeiReader(x)
