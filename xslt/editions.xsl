@@ -125,6 +125,11 @@
                                         </i>
                                     </a>
                                 </div>
+                                <div class="schlagworte">
+                                    <xsl:for-each select=".//tei:list[@type='concepts']/tei:item">
+                                        <span class="badge rounded-pill bg-primary me-1" id="{@corresp}"><xsl:value-of select="./tei:term/text()"/></span>
+                                    </xsl:for-each>
+                                </div>
                             </div>
                             <div class="col-md-1 col-lg-1 col-sm-12 text-end">
                                 <xsl:if test="ends-with($next, '.html')">
@@ -161,6 +166,7 @@
                                 <div id="osd_viewer"/>
                                 <figcaption class="figure-caption text-center">Baedeker, <xsl:value-of select="$doc_title"/>
                                 </figcaption>
+                                
                             </div>
                             <div class="col-md-7">
                                 <xsl:apply-templates select=".//tei:body"/>

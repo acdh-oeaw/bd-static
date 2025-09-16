@@ -27,6 +27,9 @@
     <xsl:template match="tei:seg[@rend='italicised']">
         <span class="dse-italics"><xsl:apply-templates/></span>
     </xsl:template>
+    <xsl:template match="tei:seg[@rend='spaced']">
+        <span class="dse-spaced"><xsl:apply-templates/></span>
+    </xsl:template>
 
     <xsl:template match="tei:seg[@rend='bold']">
         <span class="dse-bold"><xsl:apply-templates/></span>
