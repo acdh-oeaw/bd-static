@@ -35,10 +35,23 @@
             <body class="d-flex flex-column h-100">
                 <xsl:call-template name="nav_bar"/>
                     <main class="flex-shrink-0 flex-grow-1">
+                        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="ps-5 p-3">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="index.html">
+                                        <xsl:value-of select="$project_short_title"/>
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <xsl:value-of select="$doc_title"/>
+                                </li>
+                            </ol>
+                        </nav>
                         <div class="container">                        
                             <h1 class="text-center">
                                 <xsl:value-of select="$doc_title"/>
                             </h1>
+                            <div class="text-center p-1"><span id="counter1"></span> of <span id="counter2"></span> Schlagwörter</div>
                             
                             <table id="myTable">
                                 <thead>
@@ -49,21 +62,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <xsl:for-each select=".//skos:Concept[./skos:prefLabel]">
-                                        <xsl:variable name="id">
-                                            <xsl:value-of select="data(@xml:id)"/>
-                                        </xsl:variable>
+                                    <xsl:for-each select=".//tei:item[@corresp]">
+                                        <xsl:variable name="id" select="concat(replace(replace(@corresp, 't:', ''), '\.', '-'), '.html')"/>
                                         <tr>
                                             <td>
                                                 <a>
                                                   <xsl:attribute name="href">
-                                                  <xsl:value-of select="concat($id, '.html')"/>
+                                                  <xsl:value-of select="$id"/>
                                                   </xsl:attribute>
                                                   <i class="bi bi-link-45deg"/>
                                                 </a>
                                             </td>
                                             <td>
-                                                <xsl:value-of select=".//tei:orgName[1]/text()"/>
+                                                <xsl:value-of select="data(@n)"/>
                                             </td>
                                             <td>
                                                 <xsl:value-of select="$id"/>
@@ -84,10 +95,10 @@
                     <xsl:call-template name="tabulator_js"/>
             </body>
         </html>
-        <xsl:for-each select=".//tei:org">
-            <xsl:variable name="filename" select="concat(./@xml:id, '.html')"/>
-            <xsl:variable name="name" select="normalize-space(string-join(./tei:orgName[1]//text()))"></xsl:variable>
-            <xsl:result-document href="{$filename}">
+        <xsl:for-each select=".//tei:item[@corresp]">
+            <xsl:variable name="id" select="concat(replace(replace(@corresp, 't:', ''), '\.', '-'), '.html')"/>
+            <xsl:variable name="name" select="@n"></xsl:variable>
+            <xsl:result-document href="{$id}">
                 <html class="h-100" lang="{$default_lang}">
                     <head>
                         <xsl:call-template name="html_head">
@@ -97,6 +108,21 @@
                     <body class="d-flex flex-column h-100">
                         <xsl:call-template name="nav_bar"/>
                         <main class="flex-shrink-0 flex-grow-1">
+                            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="ps-5 p-3">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="index.html">
+                                            <xsl:value-of select="$project_short_title"/>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                        <a href="schlagworte.html">Schlagwörter</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        <xsl:value-of select="$name"/>
+                                    </li>
+                                </ol>
+                            </nav>
                             <div class="container">
                                 <h1 class="text-center">
                                     <xsl:value-of select="$name"/>
@@ -104,7 +130,7 @@
                                 <xsl:call-template name="org_detail"/>
                                 <div class="text-center p-4">
                                     <xsl:call-template name="blockquote">
-                                        <xsl:with-param name="pageId" select="$filename"/>
+                                        <xsl:with-param name="pageId" select="$id"/>
                                     </xsl:call-template>
                                 </div>
                             </div>

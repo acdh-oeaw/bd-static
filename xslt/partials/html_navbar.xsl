@@ -28,13 +28,13 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="hefte.html">Alle Hefte</a>
+                                <a class="nav-link" href="hefte.html">Alle Bände</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="toc.html">Alle Bände</a>
+                                <a class="nav-link" href="toc.html">Alle Seiten</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="hefte.html">Register</a>
+                                <a class="nav-link" href="schlagworte.html">Schlagworte</a>
                             </li>
                         </ul>
                         <form class="d-flex" role="search" method="GET" action="search.html">
