@@ -127,7 +127,8 @@
                                 </div>
                                 <div class="schlagworte">
                                     <xsl:for-each select=".//tei:list[@type='concepts']/tei:item">
-                                        <span class="badge rounded-pill bg-primary me-1" id="{@corresp}"><xsl:value-of select="./tei:term/text()"/></span>
+                                        <xsl:variable name="id" select="concat(replace(replace(@corresp, 't:', ''), '\.', '-'), '.html')"/>
+                                        <a href="{$id}" id="{@corresp}" class="nav-link badge rounded-pill bg-primary me-1 schlagwort-badge"><xsl:value-of select="./tei:term/text()"/></a>
                                     </xsl:for-each>
                                 </div>
                             </div>
@@ -187,8 +188,15 @@
                 <xsl:call-template name="html_footer"/>
                 <script src="vendor/openseadragon-bin-4.1.1/openseadragon.min.js"/>
                 <script src="js/facs.js"/>
+                <script src="js/schlagworte.js"/>
             </body>
         </html>
+    </xsl:template>
+    
+    <xsl:template match="tei:rs[@ref]">
+        <span class="des-schlagwort" data-schlagwort="{@ref}">
+            <xsl:apply-templates/>
+        </span>
     </xsl:template>
 
 </xsl:stylesheet>

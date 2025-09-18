@@ -157,3 +157,7 @@ div#osd_viewer {
   text-indent: 1.5em;
 }
 
+
+.highlighted {
+  background-color: yellow;
+}

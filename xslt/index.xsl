@@ -47,8 +47,8 @@
                                     <a href="about.html" type="button"
                                         class="btn btn-outline-primary btn-lg px-4 me-md-2"
                                         >Über das Projekt</a>
-                                    <a href="toc.html" type="button"
-                                        class="btn btn-outline-primary btn-lg px-4">Alle Hefte</a>
+                                    <a href="hefte.html" type="button"
+                                        class="btn btn-outline-primary btn-lg px-4">Alle Bände</a>
                                 </div>
                             </div>
                             <div class="col-10 col-sm-8 col-lg-6">
