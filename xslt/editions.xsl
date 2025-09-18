@@ -126,6 +126,7 @@
                                     </a>
                                 </div>
                                 <div class="schlagworte">
+                                    <div id="skos-switch"/>
                                     <xsl:for-each select=".//tei:list[@type='concepts']/tei:item">
                                         <xsl:variable name="id" select="concat(replace(replace(@corresp, 't:', ''), '\.', '-'), '.html')"/>
                                         <a href="{$id}" id="{@corresp}" class="nav-link badge rounded-pill bg-primary me-1 schlagwort-badge"><xsl:value-of select="./tei:term/text()"/></a>
