@@ -96,6 +96,7 @@
             </body>
         </html>
         <xsl:for-each select=".//tei:item[@corresp]">
+            <xsl:variable name="linkId" select="replace(@corresp, 't:', '')"/>
             <xsl:variable name="id" select="concat(replace(replace(@corresp, 't:', ''), '\.', '-'), '.html')"/>
             <xsl:variable name="name" select="@n"></xsl:variable>
             <xsl:result-document href="{$id}">
@@ -125,7 +126,13 @@
                             </nav>
                             <div class="container">
                                 <h1 class="text-center">
-                                    <xsl:value-of select="$name"/>
+                                    <a>
+                                        <xsl:attribute name="href">
+                                            <xsl:value-of select="concat('search.html?baedeker[refinementList][concepts.id][0]=', $linkId)"/>
+                                        </xsl:attribute>
+                                        <xsl:value-of select="$name"/>
+                                    </a>
+                                    
                                 </h1>
                                 <xsl:call-template name="org_detail"/>
                                 <div class="text-center p-4">

@@ -1,8 +1,8 @@
-const indexName = "brenner";
+const indexName = "baedeker";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
-    apiKey: "6r89B0k9bKnJ5YFmqOfXmmSxMDIubUMj",
+    apiKey: "gZafS2wgHlRvy0TSOeCY9TZMmHsAAvzT",
     nodes: [
       {
         host: "typesense.acdh-dev.oeaw.ac.at",
@@ -14,7 +14,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   },
   additionalSearchParameters: {
     query_by: "full_text",
-    sort_by: "sort_id:asc",
+    sort_by: "rec_id:asc",
   },
 });
 
@@ -25,7 +25,7 @@ const DEFAULT_CSS_CLASSES = {
   showMore: "btn btn-secondary btn-sm align-content-center",
   list: "list-unstyled",
   count: "badge m-2 badge-secondary",
-  label: "d-flex align-items-center",
+  label: "d-flex align-items-center text-capitalize",
   checkbox: "m-2",
 };
 
@@ -57,31 +57,33 @@ search.addWidgets([
       item: "w-100",
     },
     templates: {
-      empty: "Keine Treffer für <q>{{ query }}</q>",
+      empty: "Keine Resultate für <q>{{ query }}</q>",
       item(hit, { html, components }) {
         return html` <div>
-          <div class="fs-3">
-            <a href="${hit.id}.html">${hit.title}</a>
-          </div>
-          <div class="text-end">
-            ${hit.person && hit.person.length > 0
-              ? hit.person.map(
-                  (item) =>
-                    html`<a href="${item.id}.html" class="pe-2"
-                      ><i class="bi bi-person pe-1"></i>${item.label}</a
-                    >`
-                )
-              : ""}
-          </div>
-
+          <div class="fs-3"><a href="${hit.rec_id}.html">${hit.title}</a></div>
           <p>
             ${hit._snippetResult.full_text.matchedWords.length > 0
               ? components.Snippet({ hit, attribute: "full_text" })
               : ""}
           </p>
+          ${hit.concepts.map(
+            (item) =>
+              html`<a href="${item.id}.html" class="pe-2"
+                ><i class="bi bi-geo-alt pe-1"></i>${item.label}</a
+              >`
+          )}
         </div>`;
       },
     },
+  }),
+
+  instantsearch.widgets.sortBy({
+    container: "#sort-by",
+    items: [
+      { label: "Standard", value: `${indexName}` },
+      { label: "ID (aufsteigend)", value: `${indexName}/sort/rec_id:asc` },
+      { label: "ID (absteigend)", value: `${indexName}/sort/rec_id:desc` },
+    ],
   }),
 
   instantsearch.widgets.stats({
@@ -89,7 +91,7 @@ search.addWidgets([
     templates: {
       text: `
           {{#areHitsSorted}}
-            {{#hasNoSortedResults}}Kein Treffer{{/hasNoSortedResults}}
+            {{#hasNoSortedResults}}Keine Treffer{{/hasNoSortedResults}}
             {{#hasOneSortedResults}}1 Treffer{{/hasOneSortedResults}}
             {{#hasManySortedResults}}{{#helpers.formatNumber}}{{nbSortedHits}}{{/helpers.formatNumber}} Treffer {{/hasManySortedResults}}
             aus {{#helpers.formatNumber}}{{nbHits}}{{/helpers.formatNumber}}
@@ -109,24 +111,14 @@ search.addWidgets([
       return state.query.length === 0;
     },
     templates: {
-      header: "Jahr",
+      header: "Band",
     },
   })(instantsearch.widgets.refinementList)({
-    container: "#r-year ",
-    attribute: "year",
-    searchable: true,
-    showMore: true,
-    showMoreLimit: 50,
+    container: "#refinement-list-band ",
+    attribute: "band",
+    searchable: false,
     limit: 10,
-    searchablePlaceholder: "Suche nach Jahren",
     cssClasses: DEFAULT_CSS_CLASSES,
-    templates: {
-      showMoreText(data, { html }) {
-        return html`<span
-          >${data.isShowingMore ? "Weniger anzeigen" : "Mehr anzeigen"}</span
-        >`;
-      },
-    },
   }),
 
   instantsearch.widgets.panel({
@@ -134,24 +126,17 @@ search.addWidgets([
       return state.query.length === 0;
     },
     templates: {
-      header: "Heft",
+      header: "Schlagworte",
     },
   })(instantsearch.widgets.refinementList)({
-    container: "#r-issue ",
-    attribute: "issue",
+    container: "#refinement-list-concepts ",
+    attribute: "concepts.label",
     searchable: true,
     showMore: true,
     showMoreLimit: 50,
     limit: 10,
-    searchablePlaceholder: "Suche nach Heften",
+    searchablePlaceholder: "Suche nach Schlagworten",
     cssClasses: DEFAULT_CSS_CLASSES,
-    templates: {
-      showMoreText(data, { html }) {
-        return html`<span
-          >${data.isShowingMore ? "Weniger anzeigen" : "Mehr anzeigen"}</span
-        >`;
-      },
-    },
   }),
 
   instantsearch.widgets.panel({
@@ -159,74 +144,17 @@ search.addWidgets([
       return state.query.length === 0;
     },
     templates: {
-      header: "Text",
+      header: "Schlagwort-ID",
     },
   })(instantsearch.widgets.refinementList)({
-    container: "#r-text ",
-    attribute: "text.title",
+    container: "#refinement-list-conceptids ",
+    attribute: "concepts.id",
     searchable: true,
     showMore: true,
     showMoreLimit: 50,
     limit: 10,
-    searchablePlaceholder: "Suche nach Texten",
+    searchablePlaceholder: "Suche nach Schlagwort-IDs",
     cssClasses: DEFAULT_CSS_CLASSES,
-    templates: {
-      showMoreText(data, { html }) {
-        return html`<span
-          >${data.isShowingMore ? "Weniger anzeigen" : "Mehr anzeigen"}</span
-        >`;
-      },
-    },
-  }),
-
-  instantsearch.widgets.panel({
-    collapsed: ({ state }) => {
-      return state.query.length === 0;
-    },
-    templates: {
-      header: "Autor*In",
-    },
-  })(instantsearch.widgets.refinementList)({
-    container: "#r-author ",
-    attribute: "author",
-    searchable: true,
-    showMore: true,
-    showMoreLimit: 50,
-    limit: 10,
-    searchablePlaceholder: "Suche nach Autor*Innen",
-    cssClasses: DEFAULT_CSS_CLASSES,
-    templates: {
-      showMoreText(data, { html }) {
-        return html`<span
-          >${data.isShowingMore ? "Weniger anzeigen" : "Mehr anzeigen"}</span
-        >`;
-      },
-    },
-  }),
-
-  instantsearch.widgets.panel({
-    collapsed: ({ state }) => {
-      return state.query.length === 0;
-    },
-    templates: {
-      header: "Personen",
-    },
-  })(instantsearch.widgets.refinementList)({
-    container: "#r-person ",
-    attribute: "person.label",
-    searchable: true,
-    showMore: true,
-    showMoreLimit: 50,
-    limit: 10,
-    searchablePlaceholder: "Suche nach Personen",
-    cssClasses: DEFAULT_CSS_CLASSES,
-    templates: {
-      showMoreText(data, { html }) {
-        return html`<span
-          >${data.isShowingMore ? "Weniger anzeigen" : "Mehr anzeigen"}</span
-        >`;
-      },
-    },
   }),
 
   instantsearch.widgets.pagination({
@@ -241,7 +169,7 @@ search.addWidgets([
   instantsearch.widgets.clearRefinements({
     container: "#clear-refinements",
     templates: {
-      resetLabel: "Reset",
+      resetLabel: "Filter zurücksetzen",
     },
     cssClasses: {
       button: "btn",

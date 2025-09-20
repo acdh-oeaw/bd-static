@@ -152,3 +152,4 @@ desktop.ini
 # MacOS
 .DS_Store
 foo.rdf
+secret.env

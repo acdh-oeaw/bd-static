@@ -8,11 +8,10 @@
     
     <xsl:import href="./partials/html_navbar.xsl"/>
     <xsl:import href="./partials/html_head.xsl"/>
-    <xsl:import href="./partials/html_footer.xsl"/>
-    <xsl:import href="./partials/typesense_libs.xsl"/>
+    <xsl:import href="partials/html_footer.xsl"/>
     <xsl:template match="/">
         <xsl:variable name="doc_title" select="'Volltextsuche'"/>
-        <html class="h-100" lang="{$default_lang}">
+        <html class="h-100" lang="de">
             <head>
                 <xsl:call-template name="html_head">
                     <xsl:with-param name="html_title" select="$doc_title"></xsl:with-param>
@@ -25,15 +24,13 @@
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="ps-5 p-3">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="index.html">
-                                    <xsl:value-of select="$project_short_title"/>
-                                </a>
+                                <a href="index.html">Baedeker Digital</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page"><xsl:value-of select="$doc_title"/></li>
+                            <li class="breadcrumb-item active" aria-current="page">Volltextsuche</li>
                         </ol>
                     </nav>
-                    <div class="container">
-                        <h1 class="text-center">
+                    <div class="container pb-4">
+                        <h1 class="display-5 text-center">
                             <xsl:value-of select="$doc_title"/>
                         </h1>
                         <div class="text-center p-3">
@@ -42,15 +39,19 @@
                             <div id="current-refinements"/>
                             <div id="clear-refinements"/>
                         </div>
-
+                        
                         <div class="row">
                             <div class="col-md-3">
-                                <h2 class="visually-hidden">Suchfilter</h2>
-                                <div id="r-year" class="pb-3"></div>
-                                <div id="r-issue" class="pb-3"></div>
-                                <div id="r-text" class="pb-3"></div>
-                                <div id="r-author" class="pb-3"></div>
-                                <div id="r-person" class="pb-3"></div>
+                                <h2 class="visually-hidden">Facets</h2>
+                                <div>
+                                    <div id="refinement-list-band" class="pb-3"></div>
+                                    <div id="refinement-list-concepts" class="pb-3"></div>
+                                    <div id="refinement-list-conceptids" class="pb-3"></div>
+                                </div>
+                                <div>
+                                    <h3>Sortierung</h3>
+                                    <div id="sort-by"></div>
+                                </div>
                             </div>
                             <div class="col-md-9">
                                 <div id="pagination" class="p-3"/>
@@ -60,7 +61,11 @@
                     </div>
                 </main>
                 <xsl:call-template name="html_footer"/>
-                <xsl:call-template name="typesense_libs"/>
+                <link rel="stylesheet"
+                    href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/algolia-min.css"/>
+                <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.46.0"/>
+                <script src="https://cdn.jsdelivr.net/npm/typesense-instantsearch-adapter@2/dist/typesense-instantsearch-adapter.min.js"/>
+                <script src="js/search.js"/>
             </body>
         </html>
     </xsl:template>
