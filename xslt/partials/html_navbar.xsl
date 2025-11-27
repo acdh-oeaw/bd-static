@@ -34,6 +34,9 @@
                                 <a class="nav-link" href="toc.html">Alle Seiten</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="listauthors.html">Autoren</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="schlagworte.html">Schlagworte</a>
                             </li>
                         </ul>
