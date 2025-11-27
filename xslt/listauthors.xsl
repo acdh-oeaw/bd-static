@@ -15,9 +15,9 @@
         
     <xsl:template match="/">
         <xsl:variable name="doc_title">
-            <xsl:value-of select="'Personenregister'"/>
+            <xsl:value-of select="'Autoren'"/>
         </xsl:variable>
-        <xsl:variable name="listperson" select="document('../data/indices/listperson.xml')" as="document-node()"/>
+        <xsl:variable name="listperson" select="document('../data/indices/listauthors.xml')" as="document-node()"/>
         <html class="h-100" lang="de">
             
             <head>
@@ -49,12 +49,12 @@
                                     <th scope="col" tabulator-headerFilter="input" tabulator-formatter="html" tabulator-download="false" tabulator-minWidth="350">Name</th>
                                     <th scope="col" tabulator-visible="false" tabulator-download="true">name_</th>
                                     <th scope="col" tabulator-headerFilter="input" tabulator-formatter="textarea">Beruf</th>
-                                    <th scope="col" tabulator-headerFilter="input" tabulator-maxWidth="200">Texte</th>
+                                    <th scope="col" tabulator-headerFilter="input" tabulator-maxWidth="200">Beiträge</th>
                                     <th scope="col" tabulator-visible="false">ID</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <xsl:for-each select=".//tei:person[@xml:id]">
+                                <xsl:for-each select=".//tei:person[@xml:id and ./tei:listBibl/tei:bibl[@source]]">
                                     <xsl:sort select="data(@n)"></xsl:sort>
                                     <xsl:variable name="id">
                                         <xsl:value-of select="data(@xml:id)"/>
@@ -79,7 +79,7 @@
                                             <xsl:value-of select="string-join(./tei:occupation, '; ')"/>
                                         </td>
                                         <td>
-                                            <xsl:value-of select="count(.//tei:listBibl[@type='wrote']/tei:bibl)"/>
+                                            <xsl:value-of select="count(.//tei:listBibl/tei:bibl/@source)"/>
                                         </td>
                                         <td>
                                             <xsl:value-of select="concat($id, '.html')"/>
@@ -97,10 +97,10 @@
         </html>
         
         
-        <xsl:for-each select=".//tei:person[@xml:id]">
+        <xsl:for-each select=".//tei:person[@xml:id and ./tei:listBibl/tei:bibl[@source]]">
             <xsl:variable name="personId" select="data(./@xml:id)"/>
             <xsl:variable name="filename" select="concat(./@xml:id, '.html')"/>
-            <xsl:variable name="name" select="normalize-space(string-join(./tei:persName[1]//text()))"></xsl:variable>
+            <xsl:variable name="name" select="@n"></xsl:variable>
             <xsl:result-document href="{$filename}">
                 <html class="h-100" lang="de">
                     <head>
@@ -117,60 +117,33 @@
                                     <a href="index.html"><xsl:value-of select="$project_title"/></a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="listperson.html">Personenregister</a>
+                                    <a href="listauthors.html">Autoren</a>
                                 </li>
                             </ol>
                         </nav>
                         <main class="flex-shrink-0 flex-grow-1">
                             <div class="container">
-                                <h1 class="display-5 text-center">
+                                <h1 class="display-5 text-center p-2">
                                     <xsl:value-of select="$name"/>
                                 </h1>
-                                <xsl:choose>
-                                    <xsl:when test="./tei:figure/tei:graphic/@url">
-                                        <xsl:variable name="imageUrl" select="./tei:figure/tei:graphic/@url"/>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <xsl:call-template name="person_detail"/>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <figure class="figure">
-                                                    <img src="{$imageUrl}" class="figure-img img-fluid rounded" alt="Portraitbild von {$name}"/>
-                                                    <figcaption class="figure-caption">
-                                                        <xsl:value-of select="'Portraitbild von '||$name"/>. Übernommen von <a href="{$imageUrl}">Wikipedia</a>
-                                                    </figcaption>
-                                                </figure>
-                                            </div>
-                                        </div>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:call-template name="person_detail"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <xsl:if test=".//tei:noteGrp">
-                                            <h2>Erwähnungen</h2>
-                                            <ul>
-                                                <xsl:for-each select=".//tei:noteGrp//tei:note">
-                                                    <li>
-                                                        <a href="{replace(./@target, '.xml', '.html')}">
-                                                            <xsl:value-of select="./text()"/>
-                                                        </a>
-                                                    </li>
-                                                </xsl:for-each>
-                                            </ul>
-                                        </xsl:if>
+                                        <h2 class="p-2">Zur Person</h2>
+                                        <xsl:call-template name="person_detail"/>
                                     </div>
                                     <div class="col-md-6">
-                                        
-                                        <h2>Schaubühne-Texte</h2>
+                                        <h2 class="p-2">Beiträge</h2>
                                         <ul>
-                                            <xsl:for-each select="$listperson//tei:bibl[./tei:author[@key='#'||$personId]]">
+                                            <xsl:for-each select=".//tei:listBibl[./tei:bibl/@source]">
                                                 <li>
-                                                    <a href="{concat(@xml:id, '.html')}">
-                                                        <xsl:value-of select="./tei:title[@level='a']"/>
-                                                    </a>
+                                                    <xsl:choose>
+                                                        <xsl:when test="./tei:bibl[@type='chapter']">
+                                                            <a href="{replace(./tei:bibl[@type='volume']/@source, '.xml', '.html')}"><xsl:value-of select="./tei:bibl[@type='volume']"/></a>, <xsl:value-of select="./tei:bibl[@type='chapter']"/>
+                                                        </xsl:when>
+                                                        <xsl:otherwise>
+                                                            <a href="{replace(./tei:bibl[@type='volume']/@source, '.xml', '.html')}"><xsl:value-of select="./tei:bibl[@type='volume']"/></a>
+                                                        </xsl:otherwise>
+                                                    </xsl:choose>
                                                 </li>
                                             </xsl:for-each>
                                         </ul>
