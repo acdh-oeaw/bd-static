@@ -49,6 +49,9 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://corpus-search.acdh.oeaw.ac.at/crystal/#dashboard?corpname=baedkerdigital">Linguistische Suche</a>
+                            </li>
                         </ul>
                         <form class="d-flex" role="search" method="GET" action="search.html">
                             <input class="form-control me-2" type="search" placeholder="z.B. 'Konstantinopel'" aria-label="Suche" name="baedeker[query]"></input>
