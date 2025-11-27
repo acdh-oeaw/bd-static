@@ -42,7 +42,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">API</a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" href="http://dse-static-oai-pmh.acdh-dev.oeaw.ac.at/bd-static/oai-pmh">OAI-PMH</a>
+                                        <a class="dropdown-item" href="http://dse-static-oai-pmh.acdh-dev.oeaw.ac.at/baedker-digital/oai-pmh">OAI-PMH</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="beacon.txt">GND-Beacon</a>
