@@ -26,7 +26,6 @@
                                     </li>
                                 </ul>
                             </li>
-
                             <li class="nav-item">
                                 <a class="nav-link" href="hefte.html">Alle Bände</a>
                             </li>
@@ -38,6 +37,17 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="schlagworte.html">Schlagworte</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">API</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="http://dse-static-oai-pmh.acdh-dev.oeaw.ac.at/bd-static/oai-pmh">OAI-PMH</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="beacon.txt">GND-Beacon</a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                         <form class="d-flex" role="search" method="GET" action="search.html">

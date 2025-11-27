@@ -54,7 +54,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <xsl:for-each select=".//tei:person[@xml:id]">
+                                <xsl:for-each select=".//tei:person[@xml:id and ./tei:listBibl/tei:bibl[@source]]">
                                     <xsl:sort select="data(@n)"></xsl:sort>
                                     <xsl:variable name="id">
                                         <xsl:value-of select="data(@xml:id)"/>
@@ -79,7 +79,7 @@
                                             <xsl:value-of select="string-join(./tei:occupation, '; ')"/>
                                         </td>
                                         <td>
-                                            <xsl:value-of select="count(.//tei:listBibl)"/>
+                                            <xsl:value-of select="count(.//tei:listBibl/tei:bibl/@source)"/>
                                         </td>
                                         <td>
                                             <xsl:value-of select="concat($id, '.html')"/>
@@ -97,7 +97,7 @@
         </html>
         
         
-        <xsl:for-each select=".//tei:person[@xml:id]">
+        <xsl:for-each select=".//tei:person[@xml:id and ./tei:listBibl/tei:bibl[@source]]">
             <xsl:variable name="personId" select="data(./@xml:id)"/>
             <xsl:variable name="filename" select="concat(./@xml:id, '.html')"/>
             <xsl:variable name="name" select="@n"></xsl:variable>
@@ -134,14 +134,14 @@
                                     <div class="col-md-6">
                                         <h2 class="p-2">Beiträge</h2>
                                         <ul>
-                                            <xsl:for-each select=".//tei:listBibl">
+                                            <xsl:for-each select=".//tei:listBibl[./tei:bibl/@source]">
                                                 <li>
                                                     <xsl:choose>
                                                         <xsl:when test="./tei:bibl[@type='chapter']">
-                                                            <xsl:value-of select="./tei:bibl[@type='volume']"/>, <xsl:value-of select="./tei:bibl[@type='chapter']"/>
+                                                            <a href="{replace(./tei:bibl[@type='volume']/@source, '.xml', '.html')}"><xsl:value-of select="./tei:bibl[@type='volume']"/></a>, <xsl:value-of select="./tei:bibl[@type='chapter']"/>
                                                         </xsl:when>
                                                         <xsl:otherwise>
-                                                            <xsl:value-of select="./tei:bibl[@type='volume']"/>
+                                                            <a href="{replace(./tei:bibl[@type='volume']/@source, '.xml', '.html')}"><xsl:value-of select="./tei:bibl[@type='volume']"/></a>
                                                         </xsl:otherwise>
                                                     </xsl:choose>
                                                 </li>
