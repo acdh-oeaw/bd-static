@@ -142,9 +142,7 @@ print("write skos:Concepts as tei:term into back element")
 for x in tqdm(files):
     doc = TeiReader(x)
     text_node = doc.any_xpath(".//tei:text")[0]
-    for back in doc.any_xpath(".//tei:back"):
-        back.getparent().remove(back)
-    back_node = ET.SubElement(text_node, "{http://www.tei-c.org/ns/1.0}back")
+    back_node = doc.any_xpath(".//tei:back")[0]
     skos_refs = set()
     for ref in doc.any_xpath(".//tei:rs[@ref]/@ref"):
         for skos_id in ref.split():

@@ -54,12 +54,12 @@
                             </thead>
                             <tbody>
                                 <xsl:for-each select=".//tei:person[@xml:id]">
-                                    <xsl:sort select="./tei:persName/text()"></xsl:sort>
+                                    <xsl:sort select="data(@n)"></xsl:sort>
                                     <xsl:variable name="id">
                                         <xsl:value-of select="data(@xml:id)"/>
                                     </xsl:variable>
                                     <xsl:variable name="label">
-                                        <xsl:value-of select="./tei:persName/text()"/>
+                                        <xsl:value-of select="data(@n)"/>
                                     </xsl:variable>
 
                                     <tr>
@@ -96,7 +96,7 @@
         <xsl:for-each select=".//tei:person[@xml:id]">
             <xsl:variable name="personId" select="data(./@xml:id)"/>
             <xsl:variable name="filename" select="concat(./@xml:id, '.html')"/>
-            <xsl:variable name="name" select="./tei:persName/text()"></xsl:variable>
+            <xsl:variable name="name" select="data(./@n)"/>
             <xsl:result-document href="{$filename}">
                 <html class="h-100" lang="de">
                     <head>

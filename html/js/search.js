@@ -126,6 +126,24 @@ search.addWidgets([
       return state.query.length === 0;
     },
     templates: {
+      header: "Personen",
+    },
+  })(instantsearch.widgets.refinementList)({
+    container: "#refinement-list-persons ",
+    attribute: "persons.label",
+    searchable: true,
+    showMore: true,
+    showMoreLimit: 50,
+    limit: 10,
+    searchablePlaceholder: "Suche nach Personen",
+    cssClasses: DEFAULT_CSS_CLASSES,
+  }),
+
+  instantsearch.widgets.panel({
+    collapsed: ({ state }) => {
+      return state.query.length === 0;
+    },
+    templates: {
       header: "Schlagworte",
     },
   })(instantsearch.widgets.refinementList)({

@@ -45,6 +45,7 @@
                                 <h2 class="visually-hidden">Facets</h2>
                                 <div>
                                     <div id="refinement-list-band" class="pb-3"></div>
+                                    <div id="refinement-list-persons" class="pb-3"></div>
                                     <div id="refinement-list-concepts" class="pb-3"></div>
                                     <div id="refinement-list-conceptids" class="pb-3"></div>
                                 </div>

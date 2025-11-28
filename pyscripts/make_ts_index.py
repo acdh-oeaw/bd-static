@@ -4,9 +4,7 @@ import os
 from acdh_cfts_pyutils import CFTS_COLLECTION
 from acdh_cfts_pyutils import TYPESENSE_CLIENT as client
 from acdh_tei_pyutils.tei import TeiReader
-from acdh_tei_pyutils.utils import (
-    extract_fulltext,
-)
+from acdh_tei_pyutils.utils import extract_fulltext, get_xmlid
 from tqdm import tqdm
 from typesense.api_call import ObjectNotFound
 
@@ -34,6 +32,7 @@ current_schema = {
         {"name": "full_text", "type": "string", "sort": True},
         {"name": "band", "type": "string", "facet": True},
         {"name": "concepts", "type": "object[]", "facet": True, "optional": True},
+        {"name": "persons", "type": "object[]", "facet": True, "optional": True},
     ],
 }
 
@@ -78,6 +77,13 @@ for x in tqdm(files, total=len(files)):
         concept["label"] = y.attrib["n"]
         concepts.append(concept)
     record["concepts"] = concepts
+    persons = []
+    for y in doc.any_xpath(".//tei:back//tei:person[@xml:id]"):
+        person = {}
+        person["id"] = get_xmlid(y)
+        person["label"] = y.attrib["n"]
+        persons.append(person)
+    record["persons"] = persons
     records.append(record)
     cfts_records.append(cfts_record)
 
