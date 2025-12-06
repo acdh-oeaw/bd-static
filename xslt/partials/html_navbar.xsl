@@ -58,7 +58,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="https://corpus-search.acdh.oeaw.ac.at/crystal/#dashboard?corpname=baedkerdigital">Linguistische Suche</a>
+                                <a class="nav-link" href="noske-search.html">Linguistische Suche</a>
                             </li>
                         </ul>
                         <form class="d-flex" role="search" method="GET" action="search.html">
