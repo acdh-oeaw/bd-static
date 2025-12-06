@@ -66,6 +66,9 @@ search.addWidgets([
               ? components.Snippet({ hit, attribute: "full_text" })
               : ""}
           </p>
+          ${hit.persons.map(
+            (item) => html`<a href="${item.id}.html" class="pe-2"><i class="bi bi-person pe-1"></i>${item.label}</a>`
+          )}
           ${hit.concepts.map(
             (item) =>
               html`<a href="${item.id}.html" class="pe-2"
