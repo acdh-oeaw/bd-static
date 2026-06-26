@@ -25,6 +25,11 @@ except ObjectNotFound:
 current_schema = {
     "name": COLLECTION_NAME,
     "enable_nested_fields": True,
+    "metadata": {
+        "owners": ["Peter Andorfer"],
+        "description": "https://github.com/acdh-oeaw/bd-static",
+        "service_ids": [25507],
+    },
     "fields": [
         {"name": "id", "type": "string", "sort": True},
         {"name": "rec_id", "type": "string", "sort": True},
